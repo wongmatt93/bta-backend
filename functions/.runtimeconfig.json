@@ -1,5 +1,8 @@
 {
   "yelp": {
     "key": "x5gb7ZfkYZDuM44f5DJ32ks3agOi6N41vekiyqoOONkmjGFAp-hHhYhOhPTgXrZJ7ltZN1wQdFFNKk5TDZHMlYceU3jVJ_ORw3HiBTnIlxIEDzieSTwJhiVAM-MDY3Yx"
+  },
+  "mongodb": {
+    "uri": "mongodb+srv://admin:badtrip@cluster0.2iwukj8.mongodb.net/bad_tripadvisor_db?retryWrites=true&w=majority"
   }
 }
