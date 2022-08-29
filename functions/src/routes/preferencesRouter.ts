@@ -23,7 +23,7 @@ preferencesRouter.get("/", async (req, res) => {
   }
 });
 
-preferencesRouter.post("/:uid/", async (req, res) => {
+preferencesRouter.post("/", async (req, res) => {
   try {
     const newPreference: Preferences = req.body;
     const client = await getClient();
