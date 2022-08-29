@@ -1,21 +1,21 @@
 import express from "express";
 import { getClient } from "../db";
-import Favorite from "../models/Favorite";
+import VotedOn from "../models/VotedOn";
 
-const favoritesRouter = express.Router();
+const votedOnRouter = express.Router();
 
 const errorResponse = (error: any, res: any) => {
   console.error("FAIL", error);
   res.status(500).json({ message: "Internal Server Error" });
 };
 
-favoritesRouter.get("/:uid", async (req, res) => {
+votedOnRouter.get("/:uid", async (req, res) => {
   try {
     const client = await getClient();
     const uid: string = req.params.uid;
     const results = await client
       .db()
-      .collection<Favorite>("favorites")
+      .collection<VotedOn>("votedOn")
       .find({ uid })
       .toArray();
     res.json(results);
@@ -24,15 +24,15 @@ favoritesRouter.get("/:uid", async (req, res) => {
   }
 });
 
-favoritesRouter.post("/", async (req, res) => {
+votedOnRouter.post("/", async (req, res) => {
   try {
     const client = await getClient();
-    const newFavorite: Favorite = req.body;
-    await client.db().collection<Favorite>("favorites").insertOne(newFavorite);
-    res.status(200).json(newFavorite);
+    const newVotedOn: VotedOn = req.body;
+    await client.db().collection<VotedOn>("votedOn").insertOne(newVotedOn);
+    res.status(200).json(newVotedOn);
   } catch (err) {
     errorResponse(err, res);
   }
 });
 
-export default favoritesRouter;
+export default votedOnRouter;
