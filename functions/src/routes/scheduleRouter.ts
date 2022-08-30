@@ -16,7 +16,19 @@ scheduleRouter.get("/:uid", async (req, res) => {
     const results = await client
       .db()
       .collection<SingleDaySchedule>("schedule")
-      .find({ uid })
+      .aggregate([
+        { $match: { uid } },
+        {
+          $group: {
+            _id: {
+              date1: "$date1",
+              date2: "$date2",
+              uid: "$uid",
+              cityName: "$cityName",
+            },
+          },
+        },
+      ])
       .toArray();
     res.json(results);
   } catch (err) {
