@@ -68,4 +68,21 @@ scheduleRouter.post("/", async (req, res) => {
   }
 });
 
+scheduleRouter.delete("/:uid/:date1/:date2/:cityName", async (req, res) => {
+  try {
+    const client = await getClient();
+    const uid: string = req.params.uid;
+    const date1: string = req.params.date1;
+    const date2: string = req.params.date2;
+    const cityName: string = req.params.cityName;
+    await client
+      .db()
+      .collection<SingleDaySchedule>("schedule")
+      .deleteMany({ uid, date1, date2, cityName });
+    res.status(204);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
 export default scheduleRouter;

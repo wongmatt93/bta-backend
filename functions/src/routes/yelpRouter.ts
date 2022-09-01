@@ -56,4 +56,16 @@ yelpRouter.get("/breakfast", async (req, res) => {
   ).data;
   res.status(200).json(results);
 });
+
+yelpRouter.get("/business/:id", async (req, res) => {
+  const id = req.params.id;
+  const results = (
+    await axios.get(`https://api.yelp.com/v3/businesses/${id}`, {
+      headers: {
+        Authorization: `Bearer ${key}`,
+      },
+    })
+  ).data;
+  res.status(200).json(results);
+});
 export default yelpRouter;
