@@ -25,6 +25,7 @@ scheduleRouter.get("/:uid", async (req, res) => {
               date2: "$date2",
               uid: "$uid",
               cityName: "$cityName",
+              cityPhoto: "$cityPhoto",
             },
           },
         },
