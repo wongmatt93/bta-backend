@@ -28,6 +28,7 @@ scheduleRouter.get("/:uid", async (req, res) => {
             },
           },
         },
+        { $sort: { "_id.date1": 1 } },
       ])
       .toArray();
     res.json(results);
@@ -79,7 +80,7 @@ scheduleRouter.delete("/:uid/:date1/:date2/:cityName", async (req, res) => {
       .db()
       .collection<SingleDaySchedule>("schedule")
       .deleteMany({ uid, date1, date2, cityName });
-    res.status(204);
+    res.sendStatus(204);
   } catch (err) {
     errorResponse(err, res);
   }
