@@ -9,14 +9,14 @@ const errorResponse = (error: any, res: any) => {
   res.status(500).json({ message: "Internal Server Error" });
 };
 
-preferencesRouter.get("/", async (req, res) => {
+preferencesRouter.get("/:uid", async (req, res) => {
   try {
     const client = await getClient();
+    const uid = req.params.uid;
     const results = await client
       .db()
       .collection<Preferences>("user_preferences")
-      .find()
-      .toArray();
+      .findOne({ uid });
     res.json(results);
   } catch (err) {
     errorResponse(err, res);
