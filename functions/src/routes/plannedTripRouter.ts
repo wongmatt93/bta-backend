@@ -1,0 +1,41 @@
+import express from "express";
+import { getClient } from "../db";
+import PlannedTrip from "../models/PlannedTrip";
+
+const plannedTripRouter = express.Router();
+
+const errorResponse = (error: any, res: any) => {
+  console.error("FAIL", error);
+  res.status(500).json({ message: "Internal Server Error" });
+};
+
+plannedTripRouter.get("/:uid", async (req, res) => {
+  try {
+    const client = await getClient();
+    const uid: string = req.params.uid;
+    const results = await client
+      .db()
+      .collection<PlannedTrip>("planned_trips")
+      .find({ uid })
+      .toArray();
+    res.json(results);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
+plannedTripRouter.post("/", async (req, res) => {
+  try {
+    const client = await getClient();
+    const newPlannedTrip: PlannedTrip = req.body;
+    await client
+      .db()
+      .collection<PlannedTrip>("planned_trips")
+      .insertOne(newPlannedTrip);
+    res.status(200).json(newPlannedTrip);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
+export default plannedTripRouter;
