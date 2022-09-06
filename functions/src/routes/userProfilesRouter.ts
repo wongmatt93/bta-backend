@@ -75,7 +75,7 @@ userProfilesRouter.put("/:uid/voted-on", async (req, res) => {
     await client
       .db()
       .collection<UserProfile>("user_profiles")
-      .updateOne({ uid }, { $push: { voted_on: newCity } });
+      .updateOne({ uid }, { $push: { votedOn: newCity } });
     res.status(200);
     res.json(newCity);
   } catch (err) {

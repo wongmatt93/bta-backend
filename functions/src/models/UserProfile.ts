@@ -10,5 +10,5 @@ export default interface UserProfile {
   phoneNumber: string | null;
   photoURL: string | null;
   preferences?: Preferences;
-  voted_on: VotedOn[];
+  votedOn: VotedOn[];
 }
