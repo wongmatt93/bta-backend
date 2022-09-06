@@ -1,8 +1,4 @@
-import { ObjectId } from "mongodb";
-
 export default interface Preferences {
-  _id?: ObjectId;
-  uid: string;
   charming: boolean;
   foodie: boolean;
   nightlife: boolean;
