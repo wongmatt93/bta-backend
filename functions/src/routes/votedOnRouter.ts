@@ -15,7 +15,7 @@ votedOnRouter.get("/:uid", async (req, res) => {
     const uid: string = req.params.uid;
     const results = await client
       .db()
-      .collection<VotedOn>("votedOn")
+      .collection<VotedOn>("voted_on")
       .find({ uid })
       .toArray();
     res.json(results);
@@ -28,7 +28,7 @@ votedOnRouter.post("/", async (req, res) => {
   try {
     const client = await getClient();
     const newVotedOn: VotedOn = req.body;
-    await client.db().collection<VotedOn>("votedOn").insertOne(newVotedOn);
+    await client.db().collection<VotedOn>("voted_on").insertOne(newVotedOn);
     res.status(200).json(newVotedOn);
   } catch (err) {
     errorResponse(err, res);
