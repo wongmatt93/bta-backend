@@ -60,7 +60,7 @@ plannedTripRouter.put("/:id/photos", async (req, res) => {
     const photo: string = req.body.photo;
     await client
       .db()
-      .collection<PlannedTrip>("user_profiles")
+      .collection<PlannedTrip>("planned_trips")
       .updateOne({ _id: new ObjectId(id) }, { $push: { photos: photo } });
     res.status(200);
     res.json(photo);
