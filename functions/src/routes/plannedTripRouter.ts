@@ -1,4 +1,5 @@
 import express from "express";
+import { ObjectId } from "mongodb";
 import { getClient } from "../db";
 import PlannedTrip from "../models/PlannedTrip";
 
@@ -33,6 +34,36 @@ plannedTripRouter.post("/", async (req, res) => {
       .collection<PlannedTrip>("planned_trips")
       .insertOne(newPlannedTrip);
     res.status(200).json(newPlannedTrip);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
+plannedTripRouter.delete("/:id", async (req, res) => {
+  try {
+    const client = await getClient();
+    const id: string = req.params.id;
+    await client
+      .db()
+      .collection<PlannedTrip>("planned_trips")
+      .deleteOne({ _id: new ObjectId(id) });
+    res.sendStatus(204);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
+plannedTripRouter.put("/:id/photos", async (req, res) => {
+  try {
+    const client = await getClient();
+    const id: string | undefined = req.params.id;
+    const photo: string = req.body.photo;
+    await client
+      .db()
+      .collection<PlannedTrip>("user_profiles")
+      .updateOne({ _id: new ObjectId(id) }, { $push: { photos: photo } });
+    res.status(200);
+    res.json(photo);
   } catch (err) {
     errorResponse(err, res);
   }

@@ -83,4 +83,23 @@ userProfilesRouter.put("/:uid/voted-on", async (req, res) => {
   }
 });
 
+userProfilesRouter.put("/:uid/favorites/:cityname", async (req, res) => {
+  try {
+    const uid: string = req.params.uid;
+    const favorite: boolean = req.body;
+    const cityName: string = req.params.cityname;
+    const client = await getClient();
+    await client
+      .db()
+      .collection<UserProfile>("user_profiles")
+      .updateOne(
+        { uid, "votedOn.cityName": cityName },
+        { $set: { "votedOn.$.favorite": favorite } }
+      );
+    res.status(200).json(favorite);
+  } catch (err) {
+    errorResponse(err, res);
+  }
+});
+
 export default userProfilesRouter;
